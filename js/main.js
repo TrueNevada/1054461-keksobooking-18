@@ -125,3 +125,20 @@ var insertPins = function () {
 
 insertPins();
 
+var generateOffer = function (advertisement) {
+  var popup = document.querySelector('.popup');
+
+  popup.querySelector('.popup__title').textContent = advertisement.offer.title;
+  popup.querySelector('.popup__text--address').textContent = advertisement.offer.address;
+  popup.querySelector('.popup__text--price').textContent = advertisement.offer.price + ' &#x20bd;/ночь';
+  popup.querySelector('.pop.popup__text--capacity').textContent = advertisement.offer.address;
+  popup.querySelector('.popup__text--time').textContent = 'Заезд после' + advertisement.offer.checkin + ', выезд до ' + advertisement.offer.checkout;
+  popup.querySelector('.popup__features').textContent = advertisement.offer.features;
+  popup.querySelector('.popup__description').textContent = advertisement.offer.features;
+  popup.querySelector('.popup__photo').src = advertisement.offer.photos;
+  popup.querySelector('.popup__avatar').src = advertisement.author.avatar;
+
+  return popup;
+};
+
+generateOffer();
