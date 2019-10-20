@@ -201,7 +201,7 @@ var generateOffer = function (advertisement) {
   popup.querySelector('.popup__text--time').textContent = 'Заезд после ' + advertisement.offer.checkin + ', выезд до ' + advertisement.offer.checkout;
   popup.querySelector('.popup__features').textContent = advertisement.offer.features;
   popup.querySelector('.popup__description').textContent = advertisement.offer.description;
-  popup.querySelector('.popup__photos').innerHTML = advertisement.offer.photos;
+  popup.querySelector('.popup__photo').src = advertisement.offer.photos[0];
   popup.querySelector('.popup__avatar').src = advertisement.author.avatar;
 
   return popup;
