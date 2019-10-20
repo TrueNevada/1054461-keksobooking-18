@@ -1,7 +1,5 @@
 'use strict';
-
-var map = document.querySelector('.map');
-map.classList.remove('map--faded');
+var ENTER_KEYCODE = 13;
 
 var COUNT_USERS = 8;
 
@@ -50,6 +48,54 @@ var DESCRIPTIONS = [
   'Большая, светлая, уютная квартира.',
   'Уникальная возможность жить в красивой современной квартире и одновременно в окружении старинной архитектуры и духа старого Токио!'
 ];
+
+var map = document.querySelector('.map');
+
+var pinMain = document.querySelector('.map__pin--main');
+
+var address = document.querySelector('#address');
+var startCoords = (pinMain.offsetLeft + Math.round(65 / 2)) + ', ' + (pinMain.offsetTop + Math.round(65 / 2));
+var startCoordsOnMouseDown = (pinMain.offsetLeft + Math.round(65 / 2)) + ', ' + (pinMain.offsetTop + 65);
+address.value = startCoords;
+
+var mapFilter = document.querySelectorAll('.map__filter');
+
+var fieldsets = document.querySelectorAll('fieldset');
+
+var disabling = function (array, disabled) {
+  for (var i = 0; i < mapFilter.length; i++) {
+    array[i].disabled = disabled;
+  }
+};
+
+disabling(mapFilter, true);
+
+disabling(fieldsets, true);
+
+
+var form = document.querySelector('.ad-form');
+
+var startAction = function () {
+  map.classList.remove('map--faded');
+
+  form.classList.remove('ad-form--disabled');
+
+  disabling(mapFilter, false);
+
+  disabling(fieldsets, false);
+
+  address.value = startCoordsOnMouseDown;
+};
+
+pinMain.addEventListener('mousedown', function () {
+  startAction();
+});
+
+pinMain.addEventListener('keydown', function (evt) {
+  if (evt.keyCode === ENTER_KEYCODE) {
+    startAction();
+  }
+});
 
 var getRandomNumber = function (min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
@@ -100,18 +146,18 @@ var generatePost = function () {
 
 var dataList = generatePost();
 
+
 var createPin = function (marker) {
-  var userLocation = document.createElement('button');
-  var userAvatar = document.createElement('img');
-  userLocation.className = 'map__pin';
-  userLocation.style.left = marker.location.x - PIN_WIDTH + 'px';
-  userLocation.style.top = marker.location.y - (PIN_HEIGHT / 2) + 'px';
-  userAvatar.width = 40;
-  userAvatar.height = 40;
-  userAvatar.src = marker.author.avatar;
-  userAvatar.alt = 'Метка объявления';
-  userLocation.appendChild(userAvatar);
-  return userLocation;
+  var userLocation = document.querySelector('#pin')
+  .content
+  .querySelector('.map__pin');
+
+  var userPin = userLocation.cloneNode(true);
+
+  userPin.style.left = marker.location.x - PIN_WIDTH + 'px';
+  userPin.style.top = marker.location.y - (PIN_HEIGHT / 2) + 'px';
+  userPin.querySelector('img').src = marker.author.avatar;
+  return userPin;
 };
 
 var insertPins = function () {
@@ -125,20 +171,48 @@ var insertPins = function () {
 
 insertPins();
 
+var translateType = function (type) {
+  switch (type) {
+    case 'palace':
+      return 'Дворец';
+    case 'flat':
+      return 'Квартира';
+    case 'house':
+      return 'Дом';
+    case 'bungalo':
+      return 'Бунгало';
+    default:
+      return type;
+  }
+};
+
 var generateOffer = function (advertisement) {
-  var popup = document.querySelector('.popup');
+  var card = document.querySelector('#card')
+  .content
+  .querySelector('.popup');
+
+  var popup = card.cloneNode(true);
 
   popup.querySelector('.popup__title').textContent = advertisement.offer.title;
   popup.querySelector('.popup__text--address').textContent = advertisement.offer.address;
   popup.querySelector('.popup__text--price').textContent = advertisement.offer.price + ' &#x20bd;/ночь';
-  popup.querySelector('.pop.popup__text--capacity').textContent = advertisement.offer.address;
-  popup.querySelector('.popup__text--time').textContent = 'Заезд после' + advertisement.offer.checkin + ', выезд до ' + advertisement.offer.checkout;
+  popup.querySelector('.popup__type').textContent = translateType(advertisement.offer.type);
+  popup.querySelector('.popup__text--capacity').textContent = advertisement.offer.rooms + ' комнаты для ' + advertisement.offer.guests + ' гостей';
+  popup.querySelector('.popup__text--time').textContent = 'Заезд после ' + advertisement.offer.checkin + ', выезд до ' + advertisement.offer.checkout;
   popup.querySelector('.popup__features').textContent = advertisement.offer.features;
-  popup.querySelector('.popup__description').textContent = advertisement.offer.features;
-  popup.querySelector('.popup__photo').src = advertisement.offer.photos;
+  popup.querySelector('.popup__description').textContent = advertisement.offer.description;
+  popup.querySelector('.popup__photos').innerHTML = advertisement.offer.photos;
   popup.querySelector('.popup__avatar').src = advertisement.author.avatar;
 
   return popup;
 };
 
-generateOffer();
+var insertAdvertisement = function () {
+  var offer = document.createDocumentFragment();
+  for (var i = 0; i < dataList.length; i++) {
+    offer.appendChild(generateOffer(dataList[i]));
+  }
+  map.appendChild(offer);
+};
+
+insertAdvertisement();
