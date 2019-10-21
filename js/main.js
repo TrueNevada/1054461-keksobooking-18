@@ -228,6 +228,8 @@ var insertAdvertisement = function () {
 
 insertAdvertisement();
 
+// коммент для отправки коммита
+
 var roomNumber = form.querySelector('#room_number');
 var capacity = form.querySelector('#capacity');
 
