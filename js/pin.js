@@ -92,7 +92,7 @@
 
     var userPin = userLocation.cloneNode(true);
     userPin.addEventListener('click', function () {
-      popup.insertAdvertisement(marker);
+      window.popup.insertAdvertisement(marker);
     });
 
     userPin.style.left = marker.location.x - PIN_WIDTH + 'px';
@@ -108,6 +108,10 @@
       fragment.appendChild(createPin(dataList[i]));
     }
     mapPins.appendChild(fragment);
+  };
+
+  window.pin = {
+    insertPins: insertPins
   };
 
 })();

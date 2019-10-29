@@ -18,7 +18,7 @@
     popup.querySelector('.popup__title').textContent = advertisement.offer.title;
     popup.querySelector('.popup__text--address').textContent = advertisement.offer.address;
     popup.querySelector('.popup__text--price').textContent = advertisement.offer.price + ' ₽/ночь';
-    popup.querySelector('.popup__type').textContent = translateType(advertisement.offer.type);
+    popup.querySelector('.popup__type').textContent = window.util.translateType(advertisement.offer.type);
     popup.querySelector('.popup__text--capacity').textContent = advertisement.offer.rooms + ' комнаты для ' + advertisement.offer.guests + ' гостей';
     popup.querySelector('.popup__text--time').textContent = 'Заезд после ' + advertisement.offer.checkin + ', выезд до ' + advertisement.offer.checkout;
     popup.querySelector('.popup__features').textContent = advertisement.offer.features;
@@ -40,14 +40,19 @@
   var insertAdvertisement = function (marker) {
     var offer = document.createDocumentFragment();
     offer.appendChild(generateOffer(marker));
-    window.map.insertBefore(offer, document.querySelector('.map__filters-container'));
+    window.util.map.insertBefore(offer, document.querySelector('.map__filters'));
+  };
+
+  window.popup = {
+    insertAdvertisement: insertAdvertisement
   };
 
   window.addEventListener('keydown', function (evt) {
     var popup = document.querySelector('.popup');
 
-    if (evt.keyCode === ESC_KEYCODE) {
+    if (evt.keyCode === window.util.ESC_KEYCODE) {
       popup.remove();
     }
+
   });
 })();
