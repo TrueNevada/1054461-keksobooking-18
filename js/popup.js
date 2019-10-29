@@ -43,10 +43,6 @@
     window.util.map.insertBefore(offer, document.querySelector('.map__filters-container'));
   };
 
-  window.popup = {
-    insertAdvertisement: insertAdvertisement
-  };
-
   window.addEventListener('keydown', function (evt) {
     var popup = document.querySelector('.popup');
 
@@ -55,4 +51,8 @@
     }
 
   });
+
+  window.popup = {
+    insertAdvertisement: insertAdvertisement
+  };
 })();

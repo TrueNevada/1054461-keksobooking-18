@@ -11,18 +11,6 @@
   var roomField = adForm.querySelector('#room_number');
   var guestField = adForm.querySelector('#capacity');
 
-  window.form = {
-    adForm: adForm,
-    title: title,
-    price: price,
-    type: type,
-    address: address,
-    timeIn: timeIn,
-    timeOut: timeOut,
-    roomField: roomField,
-    guestField: guestField
-  };
-
   title.required = true;
   title.minLength = 30;
   title.maxLenght = 100;
@@ -95,4 +83,16 @@
   });
 
   onGuestsFieldValidation();
+
+  window.form = {
+    adForm: adForm,
+    title: title,
+    price: price,
+    type: type,
+    address: address,
+    timeIn: timeIn,
+    timeOut: timeOut,
+    roomField: roomField,
+    guestField: guestField
+  };
 })();

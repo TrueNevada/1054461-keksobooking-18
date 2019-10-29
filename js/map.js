@@ -7,12 +7,6 @@
 
   var pinMain = document.querySelector('.map__pin--main');
 
-  window.map = {
-    mapFilter: mapFilter,
-    fieldsets: fieldsets,
-    pinMain: pinMain,
-  };
-
   var disabling = function (array, disabled) {
     for (var i = 0; i < mapFilter.length; i++) {
       array[i].disabled = disabled;
@@ -50,5 +44,11 @@
       startAction();
     }
   });
+
+  window.map = {
+    mapFilter: mapFilter,
+    fieldsets: fieldsets,
+    pinMain: pinMain,
+  };
 
 })();
