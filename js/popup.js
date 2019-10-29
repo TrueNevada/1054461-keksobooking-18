@@ -40,7 +40,7 @@
   var insertAdvertisement = function (marker) {
     var offer = document.createDocumentFragment();
     offer.appendChild(generateOffer(marker));
-    window.util.map.insertBefore(offer, document.querySelector('.map__filters'));
+    window.util.map.insertBefore(offer, document.querySelector('.map__filters-container'));
   };
 
   window.popup = {
