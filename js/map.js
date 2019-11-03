@@ -23,9 +23,6 @@
   var startAction = function () {
     window.form.adForm.classList.remove('ad-form--disabled');
 
-    var coordsOnMouseDown = (pinMain.offsetLeft + Math.round(65 / 2)) + ', ' + (pinMain.offsetTop + 70);
-    window.form.address.value = coordsOnMouseDown;
-
     window.util.map.classList.remove('map--faded');
 
     disabling(mapFilter, false);
@@ -59,8 +56,30 @@
         y: moveEvt.clientY
       };
 
-      pinMain.style.top = (pinMain.offsetTop - shift.y) + 'px';
-      pinMain.style.left = (pinMain.offsetLeft - shift.x) + 'px';
+      var top = pinMain.offsetTop - shift.y
+      var left = pinMain.offsetLeft - shift.x
+
+      if (top <= 60) {
+        top = 60;
+      };
+
+      if (top >= 560) {
+        top = 560;
+      }
+
+      if (left <= 0) {
+        left = 0;
+      };
+
+      if (left >= 1135) {
+        left = 1135;
+      }
+
+      pinMain.style.top = top + 'px';
+      pinMain.style.left = left + 'px';
+
+      var coordsOnMouseDown = (pinMain.offsetLeft + Math.round(65 / 2)) + ', ' + (pinMain.offsetTop + 70);
+      window.form.address.value = coordsOnMouseDown;
 
     };
 
