@@ -83,8 +83,6 @@
     return data;
   };
 
-  var dataList = generatePost();
-
   var createPin = function (marker) {
     var userLocation = document.querySelector('#pin')
     .content
@@ -101,17 +99,26 @@
     return userPin;
   };
 
-  var insertPins = function () {
+  var insertPins = function (pins) {
     var mapPins = document.querySelector('.map__pins');
     var fragment = document.createDocumentFragment();
-    for (var i = 0; i < dataList.length; i++) {
-      fragment.appendChild(createPin(dataList[i]));
+    for (var i = 0; i < pins.length; i++) {
+      fragment.appendChild(createPin(pins[i]));
     }
     mapPins.appendChild(fragment);
   };
 
+  var errorHandler = function () {
+    var error = document.querySelector('#error')
+      .content
+      .querySelector('.error');
+    var errorMessage = error.cloneNode(true);
+    document.body.insertAdjacentElement('afterbegin', errorMessage);
+  };
+
   window.pin = {
-    insertPins: insertPins
+    insertPins: insertPins,
+    errorHandler: errorHandler
   };
 
 })();
