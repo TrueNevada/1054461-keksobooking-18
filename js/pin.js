@@ -83,6 +83,8 @@
     return data;
   };
 
+  var dataList = generatePost();
+
   var createPin = function (marker) {
     var userLocation = document.querySelector('#pin')
     .content
