@@ -29,7 +29,7 @@
 
     disabling(fieldsets, false);
 
-    window.pin.insertPins();
+    window.load(window.pin.insertPins, window.pin.errorHandler);
   };
 
   pinMain.addEventListener('mousedown', function (evt) {
@@ -56,12 +56,12 @@
         y: moveEvt.clientY
       };
 
-      var top = pinMain.offsetTop - shift.y
-      var left = pinMain.offsetLeft - shift.x
+      var top = pinMain.offsetTop - shift.y;
+      var left = pinMain.offsetLeft - shift.x;
 
       if (top <= 60) {
         top = 60;
-      };
+      }
 
       if (top >= 560) {
         top = 560;
@@ -69,7 +69,7 @@
 
       if (left <= 0) {
         left = 0;
-      };
+      }
 
       if (left >= 1135) {
         left = 1135;
