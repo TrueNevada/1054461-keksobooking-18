@@ -34,6 +34,24 @@
     }
   };
 
+  var errorHandler = function () {
+    var error = document.querySelector('#error')
+      .content
+      .querySelector('.error');
+    var errorMessage = error.cloneNode(true);
+    document.body.insertAdjacentElement('afterbegin', errorMessage);
+
+    window.addEventListener('click', function () {
+      errorMessage.remove();
+    });
+
+    window.addEventListener('keydown', function (evt) {
+      if (evt.keyCode === window.util.ESC_KEYCODE) {
+        errorMessage.remove();
+      }
+    });
+  };
+
   window.util = {
     ENTER_KEYCODE: ENTER_KEYCODE,
     ESC_KEYCODE: ESC_KEYCODE,
@@ -41,6 +59,7 @@
     getRandomNumber: getRandomNumber,
     getRandomElement: getRandomElement,
     getRandomArraySlice: getRandomArraySlice,
-    translateType: translateType
+    translateType: translateType,
+    errorHandler: errorHandler
   };
 })();

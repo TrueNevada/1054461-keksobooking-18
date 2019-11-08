@@ -29,7 +29,7 @@
 
     disabling(fieldsets, false);
 
-    window.load(window.pin.insertPins, window.pin.errorHandler);
+    window.backend.load(window.util.errorHandler, window.pin.insertPins);
   };
 
   pinMain.addEventListener('mousedown', function (evt) {
@@ -111,10 +111,28 @@
     }
   });
 
+  var reset = function () {
+    window.form.adForm.classList.add('ad-form--disabled');
+
+    window.util.map.classList.add('map--faded');
+
+    disabling(mapFilter, true);
+
+    disabling(fieldsets, true);
+
+    pinMain.style.top = 375 + 'px';
+    pinMain.style.left = 570 + 'px';
+
+    window.form.adForm.reset();
+
+    window.pin.removePins();
+  }
+
   window.map = {
     mapFilter: mapFilter,
     fieldsets: fieldsets,
     pinMain: pinMain,
+    reset: reset
   };
 
 })();

@@ -72,6 +72,31 @@
 
   adForm.addEventListener('submit', function (evt) {
     onGuestsFieldValidation(evt);
+
+    var formData = new FormData(adForm)
+
+    var successHandler = function () {
+      var error = document.querySelector('#success')
+      .content
+      .querySelector('.success');
+      var successMessage = error.cloneNode(true);
+      document.body.insertAdjacentElement('afterbegin', successMessage);
+
+      window.addEventListener('click', function () {
+        successMessage.remove();
+      });
+
+      window.addEventListener('keydown', function (evt) {
+        if (evt.keyCode === window.util.ESC_KEYCODE) {
+          successMessage.remove();
+        }
+      });
+
+      window.map.reset();
+    }
+
+    window.backend.save(formData, window.util.errorHandler, successHandler);
+    evt.preventDefault();
   });
 
   roomField.addEventListener('change', function (evt) {
