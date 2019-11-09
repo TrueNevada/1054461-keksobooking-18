@@ -49,6 +49,8 @@
     'Уникальная возможность жить в красивой современной квартире и одновременно в окружении старинной архитектуры и духа старого Токио!'
   ];
 
+  var mapPins = document.querySelector('.map__pins');
+
   var generatePost = function () {
     var data = [];
 
@@ -102,7 +104,6 @@
   };
 
   var insertPins = function (pins) {
-    var mapPins = document.querySelector('.map__pins');
     var fragment = document.createDocumentFragment();
     for (var i = 0; i < pins.length; i++) {
       fragment.appendChild(createPin(pins[i]));
@@ -110,17 +111,17 @@
     mapPins.appendChild(fragment);
   };
 
-  var errorHandler = function () {
-    var error = document.querySelector('#error')
-      .content
-      .querySelector('.error');
-    var errorMessage = error.cloneNode(true);
-    document.body.insertAdjacentElement('afterbegin', errorMessage);
-  };
+  var removePins = function () {
+    var pins = mapPins.querySelectorAll('.map__pin:not(.map__pin--main)');
+    for (var i = 0; i < pins.length; i++) {
+      pins[i].remove();
+    }
+  }
 
   window.pin = {
+    mapPins: mapPins,
     insertPins: insertPins,
-    errorHandler: errorHandler
+    removePins: removePins,
   };
 
 })();
