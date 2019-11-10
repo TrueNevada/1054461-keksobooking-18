@@ -29,7 +29,7 @@
 
     disabling(fieldsets, false);
 
-    window.backend.load(window.util.errorHandler, window.pin.insertPins);
+    window.backend.load(window.util.errorHandler, window.pin.successLoader);
   };
 
   pinMain.addEventListener('mousedown', function (evt) {
@@ -111,6 +111,11 @@
     }
   });
 
+  window.pin.housingTypeFilter.addEventListener('change', function () {
+    window.pin.removePins();
+    window.pin.updatePins();
+  })
+
   var reset = function () {
     window.form.adForm.classList.add('ad-form--disabled');
 
@@ -126,6 +131,8 @@
     window.form.adForm.reset();
 
     window.pin.removePins();
+
+    window.form.address.value = coords;
   }
 
   window.map = {
