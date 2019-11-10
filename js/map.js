@@ -114,7 +114,7 @@
   window.pin.housingTypeFilter.addEventListener('change', function () {
     window.pin.removePins();
     window.pin.updatePins();
-  })
+  });
 
   var reset = function () {
     window.form.adForm.classList.add('ad-form--disabled');
@@ -133,7 +133,7 @@
     window.pin.removePins();
 
     window.form.address.value = coords;
-  }
+  };
 
   window.map = {
     mapFilter: mapFilter,

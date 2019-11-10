@@ -114,19 +114,18 @@
   var pinList = [];
 
   var updatePins = function () {
-    var typeOfHouse = pinList.filter(function(it) {
+    var typeOfHouse = pinList.filter(function (it) {
       if (housingTypeFilter.value === 'palace') {
-        return it.offer.type === 'palace'
+        return it.offer.type === 'palace';
+      } else if (housingTypeFilter.value === 'flat') {
+        return it.offer.type === 'flat';
+      } else if (housingTypeFilter.value === 'house') {
+        return it.offer.type === 'house';
+      } else if (housingTypeFilter.value === 'bungalo') {
+        return it.offer.type === 'bungalo';
       }
-      else if (housingTypeFilter.value === 'flat') {
-        return it.offer.type === 'flat'
-      }
-      else if (housingTypeFilter.value === 'house') {
-        return it.offer.type === 'house'
-      }
-      else if (housingTypeFilter.value === 'bungalo') {
-        return it.offer.type === 'bungalo'
-      }
+
+      return it;
     });
     insertPins(typeOfHouse);
   };
