@@ -126,38 +126,30 @@
         return it.offer.type === 'house';
       } else if (housingTypeFilter.value === 'bungalo') {
         return it.offer.type === 'bungalo';
-      };
+      }
 
       return it;
     };
 
     var priceOfHouse = function (it) {
-      var lowPrice = it.offer.price < 10000;
-      var middlePrice = it.offer.price >= 10000 && it.offer.price <= 50000;
-      var highPrice = it.offer.price > 50000
-
       if (housingPriceFilter.value === 'low') {
-        return it = lowPrice;
+        return it.offer.price < 10000;
       } else if (housingPriceFilter.value === 'middle') {
-        return it = middlePrice;
+        return it.offer.price >= 10000 && it.offer.price <= 50000;
       } else if (housingPriceFilter.value === 'high') {
-        return it = highPrice;
+        return it.offer.price >= 10000 && it.offer.price <= 50000;
       }
 
       return it;
     };
 
     var countOfRooms = function (it) {
-      var oneRoom = it.offer.rooms === 1;
-      var twoRooms = it.offer.rooms === 2;
-      var threeRooms = it.offer.rooms === 3;
-
       if (housingRoomsFilter.value === '1') {
-        return it = oneRoom;
+        return it.offer.rooms === 1;
       } else if (housingRoomsFilter.value === '2') {
-        return it = twoRooms;
+        return it.offer.rooms === 2;
       } else if (housingRoomsFilter.value === '3') {
-        return it = threeRooms;
+        return it.offer.rooms === 3;
       }
 
       return it;
@@ -172,7 +164,7 @@
         return it.offer.guests === 0;
       }
 
-      return it
+      return it;
 
     };
 
