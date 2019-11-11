@@ -50,6 +50,7 @@
   ];
 
   var mapPins = document.querySelector('.map__pins');
+  var housingTypeFilter = document.querySelector('#housing-type');
 
   var generatePost = function () {
     var data = [];
@@ -104,11 +105,34 @@
   };
 
   var insertPins = function (pins) {
-    var fragment = document.createDocumentFragment();
-    for (var i = 0; i < pins.length; i++) {
-      fragment.appendChild(createPin(pins[i]));
+    var takeNumber = pins.length > 5 ? 5 : pins.length;
+    for (var i = 0; i < takeNumber; i++) {
+      mapPins.appendChild(createPin(pins[i]));
     }
-    mapPins.appendChild(fragment);
+  };
+
+  var pinList = [];
+
+  var updatePins = function () {
+    var typeOfHouse = pinList.filter(function (it) {
+      if (housingTypeFilter.value === 'palace') {
+        return it.offer.type === 'palace';
+      } else if (housingTypeFilter.value === 'flat') {
+        return it.offer.type === 'flat';
+      } else if (housingTypeFilter.value === 'house') {
+        return it.offer.type === 'house';
+      } else if (housingTypeFilter.value === 'bungalo') {
+        return it.offer.type === 'bungalo';
+      }
+
+      return it;
+    });
+    insertPins(typeOfHouse);
+  };
+
+  var successLoader = function (data) {
+    pinList = data;
+    insertPins(pinList);
   };
 
   var removePins = function () {
@@ -116,11 +140,14 @@
     for (var i = 0; i < pins.length; i++) {
       pins[i].remove();
     }
-  }
+  };
 
   window.pin = {
     mapPins: mapPins,
+    housingTypeFilter: housingTypeFilter,
     insertPins: insertPins,
+    successLoader: successLoader,
+    updatePins: updatePins,
     removePins: removePins,
   };
 

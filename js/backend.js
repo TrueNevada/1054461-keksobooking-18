@@ -28,15 +28,15 @@
 
     xhr.open(method, url);
     xhr.send(data);
-  }
+  };
 
   var load = function (onError, onLoad) {
     send(URL_DATA, 'GET', onError, onLoad, null);
-  }
+  };
 
   var save = function (data, onError, onLoad) {
     send(URL, 'POST', onError, onLoad, data);
-  }
+  };
 
   window.backend = {
     load: load,

@@ -71,9 +71,9 @@
   };
 
   adForm.addEventListener('submit', function (evt) {
-    onGuestsFieldValidation(evt);
+    onGuestsFieldValidation();
 
-    var formData = new FormData(adForm)
+    var formData = new FormData(adForm);
 
     var successHandler = function () {
       var error = document.querySelector('#success')
@@ -93,7 +93,7 @@
       });
 
       window.map.reset();
-    }
+    };
 
     window.backend.save(formData, window.util.errorHandler, successHandler);
     evt.preventDefault();
