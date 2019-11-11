@@ -51,6 +51,9 @@
 
   var mapPins = document.querySelector('.map__pins');
   var housingTypeFilter = document.querySelector('#housing-type');
+  var housingPriceFilter = document.querySelector('#housing-price');
+  var housingRoomsFilter = document.querySelector('#housing-rooms');
+  var housingGuestsFilter = document.querySelector('#housing-guests');
 
   var generatePost = function () {
     var data = [];
@@ -114,7 +117,7 @@
   var pinList = [];
 
   var updatePins = function () {
-    var typeOfHouse = pinList.filter(function (it) {
+    var typeOfHouse = function (it) {
       if (housingTypeFilter.value === 'palace') {
         return it.offer.type === 'palace';
       } else if (housingTypeFilter.value === 'flat') {
@@ -123,11 +126,59 @@
         return it.offer.type === 'house';
       } else if (housingTypeFilter.value === 'bungalo') {
         return it.offer.type === 'bungalo';
+      };
+
+      return it;
+    };
+
+    var priceOfHouse = function (it) {
+      var lowPrice = it.offer.price < 10000;
+      var middlePrice = it.offer.price >= 10000 && it.offer.price <= 50000;
+      var highPrice = it.offer.price > 50000
+
+      if (housingPriceFilter.value === 'low') {
+        return it = lowPrice;
+      } else if (housingPriceFilter.value === 'middle') {
+        return it = middlePrice;
+      } else if (housingPriceFilter.value === 'high') {
+        return it = highPrice;
       }
 
       return it;
-    });
-    insertPins(typeOfHouse);
+    };
+
+    var countOfRooms = function (it) {
+      var oneRoom = it.offer.rooms === 1;
+      var twoRooms = it.offer.rooms === 2;
+      var threeRooms = it.offer.rooms === 3;
+
+      if (housingRoomsFilter.value === '1') {
+        return it = oneRoom;
+      } else if (housingRoomsFilter.value === '2') {
+        return it = twoRooms;
+      } else if (housingRoomsFilter.value === '3') {
+        return it = threeRooms;
+      }
+
+      return it;
+    };
+
+    var countOfGuests = function (it) {
+      if (housingGuestsFilter.value === '1') {
+        return it.offer.guests === 1;
+      } else if (housingGuestsFilter.value === '2') {
+        return it.offer.guests === 2;
+      } else if (housingGuestsFilter.value === '0') {
+        return it.offer.guests === 0;
+      }
+
+      return it
+
+    };
+
+    var result = pinList.filter(typeOfHouse).filter(priceOfHouse).filter(countOfRooms).filter(countOfGuests);
+
+    insertPins(result);
   };
 
   var successLoader = function (data) {
@@ -145,6 +196,9 @@
   window.pin = {
     mapPins: mapPins,
     housingTypeFilter: housingTypeFilter,
+    housingPriceFilter: housingPriceFilter,
+    housingRoomsFilter: housingRoomsFilter,
+    housingGuestsFilter: housingGuestsFilter,
     insertPins: insertPins,
     successLoader: successLoader,
     updatePins: updatePins,

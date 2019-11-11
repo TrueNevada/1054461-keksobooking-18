@@ -7,6 +7,8 @@
 
   var pinMain = document.querySelector('.map__pin--main');
 
+  var isPageLoaded = false;
+
   var disabling = function (array, disabled) {
     for (var i = 0; i < mapFilter.length; i++) {
       array[i].disabled = disabled;
@@ -21,6 +23,8 @@
   window.form.address.value = coords;
 
   var startAction = function () {
+    isPageLoaded = true;
+
     window.form.adForm.classList.remove('ad-form--disabled');
 
     window.util.map.classList.remove('map--faded');
@@ -102,19 +106,31 @@
     document.addEventListener('mousemove', onMouseMove);
     document.addEventListener('mouseup', onMouseUp);
 
-    startAction();
-  });
-
-  pinMain.addEventListener('keydown', function (evt) {
-    if (evt.keyCode === window.util.ENTER_KEYCODE) {
+    if (!isPageLoaded) {
       startAction();
     }
   });
 
-  window.pin.housingTypeFilter.addEventListener('change', function () {
+  pinMain.addEventListener('keydown', function (evt) {
+    if (evt.keyCode === window.util.ENTER_KEYCODE) {
+      if (!isPageLoaded) {
+        startAction();
+      }
+    }
+  });
+
+  var onChangeUpdate = window.debounce(function () {
     window.pin.removePins();
     window.pin.updatePins();
   });
+
+  window.pin.housingTypeFilter.addEventListener('change', onChangeUpdate);
+
+  window.pin.housingPriceFilter.addEventListener('change', onChangeUpdate);
+
+  window.pin.housingRoomsFilter.addEventListener('change', onChangeUpdate);
+
+  window.pin.housingGuestsFilter.addEventListener('change', onChangeUpdate);
 
   var reset = function () {
     window.form.adForm.classList.add('ad-form--disabled');
