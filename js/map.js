@@ -132,6 +132,8 @@
 
   window.pin.housingGuestsFilter.addEventListener('change', onChangeUpdate);
 
+  window.pin.housingFeatures.addEventListener('change', onChangeUpdate);
+
   var reset = function () {
     window.form.adForm.classList.add('ad-form--disabled');
 

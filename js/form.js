@@ -2,6 +2,8 @@
 
 (function () {
   var adForm = document.querySelector('.ad-form');
+  var avatar = adForm.querySelector('#avatar');
+  var avatarPreview = adForm.querySelector('.ad-form-header__preview');
   var title = adForm.querySelector('#title');
   var price = adForm.querySelector('#price');
   var type = adForm.querySelector('#type');
@@ -10,6 +12,8 @@
   var timeOut = adForm.querySelector('#timeout');
   var roomField = adForm.querySelector('#room_number');
   var guestField = adForm.querySelector('#capacity');
+  var formImages = adForm.querySelector('#images');
+  var uploadPhoto = adForm.querySelector('.ad-form__photo');
 
   title.required = true;
   title.minLength = 30;
@@ -109,15 +113,11 @@
 
   onGuestsFieldValidation();
 
+  window.fileLoader.setup(avatar, avatarPreview, window.fileLoader.FillingType.REPLACE_WITH);
+  window.fileLoader.setup(formImages, uploadPhoto, window.fileLoader.FillingType.ADD_TO);
+
   window.form = {
     adForm: adForm,
-    title: title,
-    price: price,
-    type: type,
     address: address,
-    timeIn: timeIn,
-    timeOut: timeOut,
-    roomField: roomField,
-    guestField: guestField
   };
 })();
