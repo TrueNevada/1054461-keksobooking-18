@@ -59,7 +59,7 @@
       } else if (housingPriceFilter.value === 'middle') {
         return it.offer.price >= 10000 && it.offer.price <= 50000;
       } else if (housingPriceFilter.value === 'high') {
-        return it.offer.price >= 10000 && it.offer.price <= 50000;
+        return it.offer.price > 50000;
       }
 
       return it;
