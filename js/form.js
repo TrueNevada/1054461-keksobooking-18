@@ -2,6 +2,8 @@
 
 (function () {
   var adForm = document.querySelector('.ad-form');
+  var avatar = adForm.querySelector('#avatar');
+  var avatarPreview = adForm.querySelector('.ad-form-header__preview');
   var title = adForm.querySelector('#title');
   var price = adForm.querySelector('#price');
   var type = adForm.querySelector('#type');
@@ -10,6 +12,9 @@
   var timeOut = adForm.querySelector('#timeout');
   var roomField = adForm.querySelector('#room_number');
   var guestField = adForm.querySelector('#capacity');
+  var formImages = adForm.querySelector('#images');
+  var uploadPhoto = adForm.querySelector('.ad-form__photo');
+  var resetButton = adForm.querySelector('.ad-form__reset');
 
   title.required = true;
   title.minLength = 30;
@@ -36,10 +41,6 @@
   };
 
   type.addEventListener('input', function (evt) {
-    minPriceValidation(evt);
-  });
-
-  type.addEventListener('submit', function (evt) {
     minPriceValidation(evt);
   });
 
@@ -70,6 +71,8 @@
     }
   };
 
+  onGuestsFieldValidation();
+
   adForm.addEventListener('submit', function (evt) {
     onGuestsFieldValidation();
 
@@ -86,8 +89,8 @@
         successMessage.remove();
       });
 
-      window.addEventListener('keydown', function (evt) {
-        if (evt.keyCode === window.util.ESC_KEYCODE) {
+      window.addEventListener('keydown', function (keydownEvt) {
+        if (keydownEvt.keyCode === window.util.ESC_KEYCODE) {
           successMessage.remove();
         }
       });
@@ -97,6 +100,11 @@
 
     window.backend.save(formData, window.util.errorHandler, successHandler);
     evt.preventDefault();
+  });
+
+  resetButton.addEventListener('click', function () {
+    window.map.reset();
+    address.value = window.map.coords;
   });
 
   roomField.addEventListener('change', function (evt) {
@@ -109,15 +117,11 @@
 
   onGuestsFieldValidation();
 
+  window.fileLoader.setup(avatar, avatarPreview, window.fileLoader.FillingType.REPLACE_WITH);
+  window.fileLoader.setup(formImages, uploadPhoto, window.fileLoader.FillingType.ADD_TO);
+
   window.form = {
     adForm: adForm,
-    title: title,
-    price: price,
-    type: type,
     address: address,
-    timeIn: timeIn,
-    timeOut: timeOut,
-    roomField: roomField,
-    guestField: guestField
   };
 })();
