@@ -120,6 +120,7 @@
   });
 
   var onChangeUpdate = window.debounce(function () {
+    window.popup.openPopup.remove();
     window.pin.removePins();
     window.pin.updatePins();
   });

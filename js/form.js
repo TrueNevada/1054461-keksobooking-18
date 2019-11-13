@@ -14,6 +14,7 @@
   var guestField = adForm.querySelector('#capacity');
   var formImages = adForm.querySelector('#images');
   var uploadPhoto = adForm.querySelector('.ad-form__photo');
+  var resetButton = adForm.querySelector('.ad-form__reset');
 
   title.required = true;
   title.minLength = 30;
@@ -101,6 +102,11 @@
 
     window.backend.save(formData, window.util.errorHandler, successHandler);
     evt.preventDefault();
+  });
+
+  resetButton.addEventListener('click', function (evt) {
+    window.map.reset();
+    address.value = window.map.coords;
   });
 
   roomField.addEventListener('change', function (evt) {

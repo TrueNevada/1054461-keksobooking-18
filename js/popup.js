@@ -8,9 +8,7 @@
 
     var popup = card.cloneNode(true);
     var closeButton = popup.querySelector('.popup__close');
-    closeButton.addEventListener('click', function () {
-      popup.remove();
-    });
+    closeButton.addEventListener('click', popupRemove);
     var imagesRoot = popup.querySelector('.popup__photos');
     var image = imagesRoot.querySelector('img');
     image.remove();
@@ -43,16 +41,22 @@
     window.util.map.insertBefore(offer, document.querySelector('.map__filters-container'));
   };
 
-  window.addEventListener('keydown', function (evt) {
+  var popupRemove = function () {
     var popup = document.querySelector('.popup');
-
-    if (evt.keyCode === window.util.ESC_KEYCODE) {
+    if (popup) {
       popup.remove();
+    };
+  }
+
+  window.addEventListener('keydown', function (evt) {
+    if (evt.keyCode === window.util.ESC_KEYCODE) {
+      popupRemove();
     }
 
   });
 
   window.popup = {
-    insertAdvertisement: insertAdvertisement
+    insertAdvertisement: insertAdvertisement,
+    popupRemove: popupRemove
   };
 })();
