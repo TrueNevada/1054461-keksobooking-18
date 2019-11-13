@@ -44,10 +44,6 @@
     minPriceValidation(evt);
   });
 
-  type.addEventListener('submit', function (evt) {
-    minPriceValidation(evt);
-  });
-
   minPriceValidation();
 
   address.readOnly = true;
@@ -75,6 +71,8 @@
     }
   };
 
+  onGuestsFieldValidation();
+
   adForm.addEventListener('submit', function (evt) {
     onGuestsFieldValidation();
 
@@ -91,8 +89,8 @@
         successMessage.remove();
       });
 
-      window.addEventListener('keydown', function (evt) {
-        if (evt.keyCode === window.util.ESC_KEYCODE) {
+      window.addEventListener('keydown', function (keydownEvt) {
+        if (keydownEvt.keyCode === window.util.ESC_KEYCODE) {
           successMessage.remove();
         }
       });
@@ -104,7 +102,7 @@
     evt.preventDefault();
   });
 
-  resetButton.addEventListener('click', function (evt) {
+  resetButton.addEventListener('click', function () {
     window.map.reset();
     address.value = window.map.coords;
   });

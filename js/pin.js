@@ -19,8 +19,8 @@
 
     var userPin = userLocation.cloneNode(true);
     userPin.addEventListener('click', function () {
+      window.popup.popupRemove();
       window.popup.insertAdvertisement(marker);
-      window.popup.removePopup();
     });
 
     userPin.style.left = marker.location.x - PIN_WIDTH + 'px';

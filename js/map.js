@@ -7,10 +7,17 @@
 
   var pinMain = document.querySelector('.map__pin--main');
 
+  var PIN_MAIN_WIDTH = 65;
+  var PIN_MAIN_HEIGHT = 65;
+  var PIN_MAIN_HEIGHT_ON_MOUSEDOWN = 80;
+
+  var PIN_MAIN_STYLE_TOP = 375 + 'px';
+  var PIN_MAIN_STYLE_LEFT = 570 + 'px';
+
   var isPageLoaded = false;
 
   var disabling = function (array, disabled) {
-    for (var i = 0; i < mapFilter.length; i++) {
+    for (var i = 0; i < array.length; i++) {
       array[i].disabled = disabled;
     }
   };
@@ -19,7 +26,7 @@
 
   disabling(fieldsets, true);
 
-  var coords = (pinMain.offsetLeft + Math.round(65 / 2)) + ', ' + (pinMain.offsetTop + Math.round(65 / 2));
+  var coords = (pinMain.offsetLeft + Math.round(PIN_MAIN_WIDTH / 2)) + ', ' + (pinMain.offsetTop + Math.round(PIN_MAIN_HEIGHT / 2));
   window.form.address.value = coords;
 
   var startAction = function () {
@@ -63,26 +70,15 @@
       var top = pinMain.offsetTop - shift.y;
       var left = pinMain.offsetLeft - shift.x;
 
-      if (top <= 60) {
-        top = 60;
+      if (top > 60 && top < 560) {
+        pinMain.style.top = top + 'px';
       }
 
-      if (top >= 560) {
-        top = 560;
+      if (left > 0 && left < 1135) {
+        pinMain.style.left = left + 'px';
       }
 
-      if (left <= 0) {
-        left = 0;
-      }
-
-      if (left >= 1135) {
-        left = 1135;
-      }
-
-      pinMain.style.top = top + 'px';
-      pinMain.style.left = left + 'px';
-
-      var coordsOnMouseDown = (pinMain.offsetLeft + Math.round(65 / 2)) + ', ' + (pinMain.offsetTop + 70);
+      var coordsOnMouseDown = (pinMain.offsetLeft + Math.round(PIN_MAIN_WIDTH / 2)) + ', ' + (pinMain.offsetTop + PIN_MAIN_HEIGHT_ON_MOUSEDOWN);
       window.form.address.value = coordsOnMouseDown;
 
     };
@@ -120,7 +116,7 @@
   });
 
   var onChangeUpdate = window.debounce(function () {
-    window.popup.openPopup.remove();
+    window.popup.popupRemove();
     window.pin.removePins();
     window.pin.updatePins();
   });
@@ -144,8 +140,8 @@
 
     disabling(fieldsets, true);
 
-    pinMain.style.top = 375 + 'px';
-    pinMain.style.left = 570 + 'px';
+    pinMain.style.top = PIN_MAIN_STYLE_TOP;
+    pinMain.style.left = PIN_MAIN_STYLE_LEFT;
 
     window.form.adForm.reset();
 
@@ -160,6 +156,7 @@
     mapFilter: mapFilter,
     fieldsets: fieldsets,
     pinMain: pinMain,
+    coords: coords,
     reset: reset
   };
 
