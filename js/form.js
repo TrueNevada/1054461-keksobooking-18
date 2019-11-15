@@ -109,7 +109,7 @@
 
   var uploadPhotos = adForm.querySelectorAll('.ad-form__photo');
 
-  var removePreiview = function (container, fact) {
+  var removePreiview = function (container) {
     container.forEach(function (item) {
       item.remove();
     })
