@@ -149,6 +149,8 @@
 
     window.pin.removePins();
 
+    window.form.removePreview();
+
     window.form.address.value = coords;
 
     isPageLoaded = false;

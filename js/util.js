@@ -2,7 +2,7 @@
 
 (function () {
   var ENTER_KEYCODE = 13;
-  var ESC_KEYCODE = 27;
+  var ESC_KEYCODE = 'Escape';
 
   var map = document.querySelector('.map');
 

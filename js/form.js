@@ -93,7 +93,7 @@
       });
 
       window.addEventListener('keydown', function (keydownEvt) {
-        if (keydownEvt.keyCode === window.util.ESC_KEYCODE) {
+        if (keydownEvt.code === window.util.ESC_KEYCODE) {
           successMessage.remove();
         }
       });
@@ -107,18 +107,19 @@
     evt.preventDefault();
   });
 
-  var uploadPhotos = adForm.querySelectorAll('.ad-form__photo');
-
-  var removePreiview = function (container) {
-    container.forEach(function (item) {
+  var removePreview = function () {
+    var uploadPhotos = adForm.querySelectorAll('.ad-form__photo');
+    uploadPhotos.forEach(function (item) {
       item.remove();
     });
+    var div = document.createElement('div');
+    div.classList.add('ad-form__photo');
+    uploadPhotoContainer.appendChild(div);
+    window.fileLoader.setup(formImages, div, window.fileLoader.FillingType.ADD_TO);
   };
 
   resetButton.addEventListener('click', function () {
     window.map.reset();
-    removePreiview(uploadPhotos);
-    address.value = window.map.coords;
   });
 
   roomField.addEventListener('change', function (evt) {
@@ -139,7 +140,7 @@
     avatarPreview: avatarPreview,
     upload: upload,
     uploadPhoto: uploadPhoto,
-    uploadPhotoContainer: uploadPhotoContainer,
+    removePreview: removePreview,
     address: address,
   };
 })();
