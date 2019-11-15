@@ -1,12 +1,6 @@
 'use strict';
 
 (function () {
-  var mapFilter = document.querySelectorAll('.map__filter');
-
-  var fieldsets = document.querySelectorAll('fieldset');
-
-  var pinMain = document.querySelector('.map__pin--main');
-
   var PIN_MAIN_WIDTH = 65;
   var PIN_MAIN_HEIGHT = 65;
   var PIN_MAIN_HEIGHT_ON_MOUSEDOWN = 80;
@@ -14,19 +8,25 @@
   var PIN_MAIN_STYLE_TOP = 375 + 'px';
   var PIN_MAIN_STYLE_LEFT = 570 + 'px';
 
+  var mapFilter = document.querySelectorAll('.map__filter');
+
+  var fieldsets = document.querySelectorAll('fieldset');
+
+  var pinMain = document.querySelector('.map__pin--main');
+
   var isPageLoaded = false;
 
-  var disabling = function (array, disabled) {
+  var disableInputs = function (array, disabled) {
     for (var i = 0; i < array.length; i++) {
       array[i].disabled = disabled;
     }
   };
 
-  disabling(mapFilter, true);
+  disableInputs(mapFilter, true);
 
-  disabling(fieldsets, true);
+  disableInputs(fieldsets, true);
 
-  var coords = (pinMain.offsetLeft + Math.round(PIN_MAIN_WIDTH / 2)) + ', ' + (pinMain.offsetTop + Math.round(PIN_MAIN_HEIGHT / 2));
+  var coords = (pinMain.offsetLeft + Math.floor(PIN_MAIN_WIDTH / 2)) + ', ' + (pinMain.offsetTop + Math.floor(PIN_MAIN_HEIGHT / 2));
   window.form.address.value = coords;
 
   var startAction = function () {
@@ -36,11 +36,11 @@
 
     window.util.map.classList.remove('map--faded');
 
-    disabling(mapFilter, false);
+    disableInputs(mapFilter, false);
 
-    disabling(fieldsets, false);
+    disableInputs(fieldsets, false);
 
-    window.backend.load(window.util.errorHandler, window.pin.successLoader);
+    window.backend.load(window.util.onErrorLoad, window.pin.onPinSuccessLoad);
   };
 
   pinMain.addEventListener('mousedown', function (evt) {
@@ -70,15 +70,15 @@
       var top = pinMain.offsetTop - shift.y;
       var left = pinMain.offsetLeft - shift.x;
 
-      if (top > 60 && top < 560) {
+      if (top > 49 && top < 551) {
         pinMain.style.top = top + 'px';
       }
 
-      if (left > 0 && left < 1135) {
+      if (left > (-33) && left < 1168) {
         pinMain.style.left = left + 'px';
       }
 
-      var coordsOnMouseDown = (pinMain.offsetLeft + Math.round(PIN_MAIN_WIDTH / 2)) + ', ' + (pinMain.offsetTop + PIN_MAIN_HEIGHT_ON_MOUSEDOWN);
+      var coordsOnMouseDown = (pinMain.offsetLeft + Math.floor(PIN_MAIN_WIDTH / 2)) + ', ' + (pinMain.offsetTop + PIN_MAIN_HEIGHT_ON_MOUSEDOWN);
       window.form.address.value = coordsOnMouseDown;
 
     };
@@ -136,14 +136,16 @@
 
     window.util.map.classList.add('map--faded');
 
-    disabling(mapFilter, true);
+    disableInputs(mapFilter, true);
 
-    disabling(fieldsets, true);
+    disableInputs(fieldsets, true);
 
     pinMain.style.top = PIN_MAIN_STYLE_TOP;
     pinMain.style.left = PIN_MAIN_STYLE_LEFT;
 
     window.form.adForm.reset();
+
+    window.form.avatarPreview.querySelector('img').src = 'img/muffin-grey.svg';
 
     window.pin.removePins();
 

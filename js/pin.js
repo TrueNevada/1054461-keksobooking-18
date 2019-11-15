@@ -39,7 +39,7 @@
   var pinList = [];
 
   var updatePins = function () {
-    var typeOfHouse = function (it) {
+    var getTypeOfHouse = function (it) {
       if (housingTypeFilter.value === 'palace') {
         return it.offer.type === 'palace';
       } else if (housingTypeFilter.value === 'flat') {
@@ -53,7 +53,7 @@
       return it;
     };
 
-    var priceOfHouse = function (it) {
+    var countPrice = function (it) {
       if (housingPriceFilter.value === 'low') {
         return it.offer.price < 10000;
       } else if (housingPriceFilter.value === 'middle') {
@@ -65,7 +65,7 @@
       return it;
     };
 
-    var countOfRooms = function (it) {
+    var countRooms = function (it) {
       if (housingRoomsFilter.value === '1') {
         return it.offer.rooms === 1;
       } else if (housingRoomsFilter.value === '2') {
@@ -77,7 +77,7 @@
       return it;
     };
 
-    var countOfGuests = function (it) {
+    var countGuests = function (it) {
       if (housingGuestsFilter.value === '1') {
         return it.offer.guests === 1;
       } else if (housingGuestsFilter.value === '2') {
@@ -108,12 +108,12 @@
       return true;
     };
 
-    var result = pinList.filter(typeOfHouse).filter(priceOfHouse).filter(countOfRooms).filter(countOfGuests).filter(featuresCheck);
+    var result = pinList.filter(getTypeOfHouse).filter(countPrice).filter(countRooms).filter(countGuests).filter(featuresCheck);
 
     insertPins(result);
   };
 
-  var successLoader = function (data) {
+  var onPinSuccessLoad = function (data) {
     pinList = data;
     insertPins(pinList);
   };
@@ -133,7 +133,7 @@
     housingGuestsFilter: housingGuestsFilter,
     housingFeatures: housingFeatures,
     insertPins: insertPins,
-    successLoader: successLoader,
+    onPinSuccessLoad: onPinSuccessLoad,
     updatePins: updatePins,
     removePins: removePins,
   };
