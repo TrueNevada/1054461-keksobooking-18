@@ -112,7 +112,7 @@
   var removePreiview = function (container) {
     container.forEach(function (item) {
       item.remove();
-    })
+    });
   };
 
   resetButton.addEventListener('click', function () {
