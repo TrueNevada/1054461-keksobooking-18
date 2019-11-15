@@ -74,7 +74,7 @@
         pinMain.style.top = top + 'px';
       }
 
-      if (left > (-33) && left < 1168) {
+      if (left > (-33) && left < 1169) {
         pinMain.style.left = left + 'px';
       }
 

@@ -82,6 +82,8 @@
     var formData = new FormData(adForm);
 
     var onSuccessLoad = function () {
+      window.map.pinMain.focus();
+
       var error = document.querySelector('#success')
       .content
       .querySelector('.success');
