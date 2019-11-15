@@ -13,7 +13,9 @@
   var roomField = adForm.querySelector('#room_number');
   var guestField = adForm.querySelector('#capacity');
   var formImages = adForm.querySelector('#images');
+  var upload = adForm.querySelector('.ad-form__upload');
   var uploadPhoto = adForm.querySelector('.ad-form__photo');
+  var uploadPhotoContainer = adForm.querySelector('.ad-form__photo-container');
   var resetButton = adForm.querySelector('.ad-form__reset');
 
   title.required = true;
@@ -24,7 +26,7 @@
   price.max = 1000000;
   price.placeholder = '1000';
 
-  var minPriceValidation = function () {
+  var onPriceFieldValidation = function () {
     if (type.value === 'bungalo') {
       price.min = 0;
       price.placeholder = '0';
@@ -41,10 +43,10 @@
   };
 
   type.addEventListener('input', function (evt) {
-    minPriceValidation(evt);
+    onPriceFieldValidation(evt);
   });
 
-  minPriceValidation();
+  onPriceFieldValidation();
 
   address.readOnly = true;
 
@@ -71,6 +73,7 @@
     }
   };
 
+
   onGuestsFieldValidation();
 
   adForm.addEventListener('submit', function (evt) {
@@ -78,7 +81,9 @@
 
     var formData = new FormData(adForm);
 
-    var successHandler = function () {
+    var onSuccessLoad = function () {
+      window.map.pinMain.focus();
+
       var error = document.querySelector('#success')
       .content
       .querySelector('.success');
@@ -90,21 +95,33 @@
       });
 
       window.addEventListener('keydown', function (keydownEvt) {
-        if (keydownEvt.keyCode === window.util.ESC_KEYCODE) {
+        if (keydownEvt.code === window.util.ESC_KEYCODE) {
           successMessage.remove();
         }
       });
 
       window.map.reset();
+
+      onGuestsFieldValidation();
     };
 
-    window.backend.save(formData, window.util.errorHandler, successHandler);
+    window.backend.save(formData, window.util.onErrorLoad, onSuccessLoad);
     evt.preventDefault();
   });
 
+  var removePreview = function () {
+    var uploadPhotos = adForm.querySelectorAll('.ad-form__photo');
+    uploadPhotos.forEach(function (item) {
+      item.remove();
+    });
+    var div = document.createElement('div');
+    div.classList.add('ad-form__photo');
+    uploadPhotoContainer.appendChild(div);
+    window.fileLoader.setup(formImages, div, window.fileLoader.FillingType.ADD_TO);
+  };
+
   resetButton.addEventListener('click', function () {
     window.map.reset();
-    address.value = window.map.coords;
   });
 
   roomField.addEventListener('change', function (evt) {
@@ -122,6 +139,10 @@
 
   window.form = {
     adForm: adForm,
+    avatarPreview: avatarPreview,
+    upload: upload,
+    uploadPhoto: uploadPhoto,
+    removePreview: removePreview,
     address: address,
   };
 })();

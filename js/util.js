@@ -2,7 +2,7 @@
 
 (function () {
   var ENTER_KEYCODE = 13;
-  var ESC_KEYCODE = 27;
+  var ESC_KEYCODE = 'Escape';
 
   var map = document.querySelector('.map');
 
@@ -34,7 +34,7 @@
     }
   };
 
-  var errorHandler = function () {
+  var onErrorLoad = function () {
     var error = document.querySelector('#error')
       .content
       .querySelector('.error');
@@ -60,6 +60,6 @@
     getRandomElement: getRandomElement,
     getRandomArraySlice: getRandomArraySlice,
     translateType: translateType,
-    errorHandler: errorHandler
+    onErrorLoad: onErrorLoad
   };
 })();
